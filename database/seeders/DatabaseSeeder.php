@@ -14,6 +14,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+        $this->call(
+            [
+                ClientSeeder::class,
+                ProjectSeeder::class,
+                EmployeeSeeder::class,
+                ProjectEmployeeSeeder::class,
+                ProjectPaymentSeeder::class,
+                SalarySeeder::class,
+            ]
+        );
+
+
 
         User::factory()->create([
             'name' => 'Test User',
