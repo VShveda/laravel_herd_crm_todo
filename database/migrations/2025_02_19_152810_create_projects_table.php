@@ -19,7 +19,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('clients');
             $table->decimal('cost', 10, 2);
-            $table->enum('status', ['active', 'completed']);
+            $table->enum('status', ['active', 'completed', 'cancelled']);
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
