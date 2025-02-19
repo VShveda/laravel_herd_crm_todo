@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('project_employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')
-                ->references('id')
-                ->on('projects')
+                ->constrained()
                 ->onDelete('cascade');
             $table->foreignId('employee_id')
                 ->references('id')

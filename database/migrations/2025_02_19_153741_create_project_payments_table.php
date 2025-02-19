@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('project_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')
-                ->references('id')
-                ->on('projects')
+                ->constrained()
                 ->onDelete('cascade');
             $table->decimal('amount', 10, 2);
             $table->date('payment_date');
