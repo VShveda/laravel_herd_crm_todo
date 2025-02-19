@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')
                 ->references('id')
-                ->on('projects');
+                ->on('projects')
+                ->onDelete('cascade');
             $table->decimal('amount', 10, 2);
             $table->date('payment_date');
             $table->timestamps();

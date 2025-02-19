@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('description');
             $table->foreignId('client_id')
                 ->references('id')
-                ->on('clients');
+                ->on('clients')
+                ->onDelete('cascade');
             $table->decimal('cost', 10, 2);
             $table->enum('status', ['active', 'completed', 'cancelled']);
             $table->date('start_date');

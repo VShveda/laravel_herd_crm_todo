@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')
                 ->references('id')
-                ->on('employees');
+                ->on('employees')
+                ->onDelete('cascade');
             $table->decimal('amount', 10, 2);
             $table->date('payment_date');
             $table->boolean('is_paid')

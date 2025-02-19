@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')
                 ->references('id')
-                ->on('projects');
+                ->on('projects')
+                ->onDelete('cascade');
             $table->foreignId('employee_id')
                 ->references('id')
-                ->on('employees');
+                ->on('employees')
+                ->onDelete('cascade');
             $table->string('role', 255);
             $table->decimal('hourly_rate', 10, 2);
             $table->timestamps();
