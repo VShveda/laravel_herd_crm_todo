@@ -45,11 +45,9 @@ class EmployeeResource extends Resource
                     ])
                     ->required(),
                 TextInput::make('rate')
-                    ->numeric()
-                    ->visible(fn ($get) => $get('salary_type') === 'hourly'),
+                    ->numeric(),
                 TextInput::make('fixed_salary')
-                    ->numeric()
-                    ->visible(fn ($get) => $get('salary_type') === 'fixed'),
+                    ->numeric(),
                 DatePicker::make('hire_date')
                     ->required(),
                 Select::make('status')
