@@ -6,6 +6,7 @@ use App\Filament\Resources\ProjectEmployeeResource\Pages;
 use App\Filament\Resources\ProjectEmployeeResource\RelationManagers;
 use App\Models\ProjectEmployee;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +24,22 @@ class ProjectEmployeeResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('project_id')
+                    ->label('Project')
+                    ->relationship('project', 'name')
+                    ->required(),
+                Forms\Components\Select::make('employee_id')
+                    ->label('Employee')
+                    ->relationship('employee', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('role')
+                    ->label('Role')
+                    ->maxLength(255)
+                    ->required(),
+                Forms\Components\TextInput::make('hourly_rate')
+                    ->label('Hourly Rate')
+                    ->numeric(10, 2)
+                    ->required(),
             ]);
     }
 
@@ -31,13 +47,24 @@ class ProjectEmployeeResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('project.name')
+                    ->label('Project')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('employee.name')
+                    ->label('Employee')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('role'),
+                Tables\Columns\TextColumn::make('hourly_rate')
+                    ->label('Hourly Rate'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
