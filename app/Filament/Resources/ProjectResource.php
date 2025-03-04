@@ -23,7 +23,29 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->label('Project name')
+                    ->maxLength(255)
+                    ->required(),
+                Forms\Components\Textarea::make('description')
+                    ->label('Description'),
+                Forms\Components\Select::make('client_id')
+                    ->relationship('client', 'name')
+                    ->label('Client'),
+                Forms\Components\TextInput::make('cost')
+                    ->label('Cost')
+                    ->type('decimal'),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'active' => 'Active',
+                        'completed' => 'Completed',
+                        'cancelled' => 'Cancelled',
+                    ])
+                    ->required(),
+                Forms\Components\DatePicker::make('start_date')
+                    ->required(),
+                Forms\Components\DatePicker::make('end_date')
+
             ]);
     }
 
@@ -31,13 +53,36 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('client.name')
+                    ->label('Client')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('cost')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('start_date')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('end_date')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
