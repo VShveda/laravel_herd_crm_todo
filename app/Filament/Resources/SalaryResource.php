@@ -6,6 +6,7 @@ use App\Filament\Resources\SalaryResource\Pages;
 use App\Filament\Resources\SalaryResource\RelationManagers;
 use App\Models\Salary;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +24,20 @@ class SalaryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('employee_id')
+                    ->label('Employee')
+                    ->relationship('employee', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('amount')
+                    ->label('Amount')
+                    ->numeric(10, 2)
+                    ->required(),
+                Forms\Components\DateTimePicker::make('payment_date')
+                    ->label('Payment Date')
+                    ->required(),
+                Forms\Components\Checkbox::make('is_paid')
+                    ->label('Is Paid')
+                    ->default(false),
             ]);
     }
 
@@ -31,13 +45,24 @@ class SalaryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('employee.name')
+                    ->label('Employee')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('amount')
+                    ->label('Amount'),
+                Tables\Columns\TextColumn::make('payment_date')
+                    ->label('Payment Date')
+                    ->dateTime(),
+                Tables\Columns\TextColumn::make('is_paid')
+                    ->label('Is Paid')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
