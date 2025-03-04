@@ -23,7 +23,17 @@ class ProjectPaymentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('project_id')
+                    ->label('Project')
+                    ->relationship('project', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('amount')
+                    ->label('Amount')
+                    ->numeric(10, 2)
+                    ->required(),
+                Forms\Components\DateTimePicker::make('payment_date')
+                    ->label('Payment Date')
+                    ->required(),
             ]);
     }
 
@@ -31,13 +41,20 @@ class ProjectPaymentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('project.name')
+                    ->label('Project'),
+                Tables\Columns\TextColumn::make('amount')
+                    ->label('Amount'),
+                Tables\Columns\TextColumn::make('payment_date')
+                    ->label('Payment Date')
+                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
