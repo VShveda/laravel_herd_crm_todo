@@ -23,7 +23,10 @@ class ClientResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('contact_person'),
+                Forms\Components\TextInput::make('contact_details'),
+                Forms\Components\TextInput::make('billing_info'),
             ]);
     }
 
@@ -31,13 +34,22 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('contact_person')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('contact_details')
+                    ->limit(50),
+                Tables\Columns\TextColumn::make('billing_info'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
