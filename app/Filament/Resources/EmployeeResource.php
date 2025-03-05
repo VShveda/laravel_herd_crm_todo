@@ -5,19 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EmployeeResource\Pages;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
 use App\Models\Employee;
-use Filament\Actions\Action;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\SelectColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Console\View\Components\Choice;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -31,30 +23,21 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->label('Full Name')
+                Forms\Components\TextInput::make('name')
                     ->required(),
-                TextInput::make('position')
-                    ->label('Position')
+                Forms\Components\TextInput::make('position')
                     ->required(),
-                Select::make('salary_type')
-                    ->label('Salary Type')
-                    ->options([
-                        'hourly' => 'hourly',
-                        'fixed' => 'fixed',
-                    ])
+                Forms\Components\TextInput::make('salary_type')
                     ->required(),
-                TextInput::make('rate')
+                Forms\Components\TextInput::make('rate')
+                    ->required()
                     ->numeric(),
-                TextInput::make('fixed_salary')
+                Forms\Components\TextInput::make('fixed_salary')
+                    ->required()
                     ->numeric(),
-                DatePicker::make('hire_date')
+                Forms\Components\DatePicker::make('hire_date')
                     ->required(),
-                Select::make('status')
-                    ->options([
-                    'active' => 'Активний',
-                    'inactive' => 'Неактивний',
-                    ])
+                Forms\Components\TextInput::make('status')
                     ->required(),
             ]);
     }
@@ -63,26 +46,37 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('position'),
-                SelectColumn::make('status')
-                    ->options([
-                        'active' => 'Активний',
-                        'inactive' => 'Неактивний',
-                    ])
-                    ->sortable()
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('salary_type')->badge(),
-                TextColumn::make('rate'),
-                TextColumn::make('fixed_salary'),
+                Tables\Columns\TextColumn::make('position')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('salary_type')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('rate')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('fixed_salary')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('hire_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
