@@ -17,17 +17,17 @@ class ProjectDebtOverview extends BaseWidget
 
         return [
             Stat::make('Загальна сума оплат', $totalPayments)
-                ->description('')
+                ->description('Оплатили')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
             Stat::make('Загальна вартість проектів', $totalCost)
-                ->description('')
-                ->descriptionIcon('heroicon-m-arrow-trending-down')
-                ->color('danger'),
-            Stat::make('Загальний борг', $totalDebt)
-                ->description('')
+                ->description('В загальному')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
+            Stat::make('Загальний борг', $totalDebt)
+                ->description('Борг')
+                ->descriptionIcon('heroicon-m-arrow-trending-down')
+                ->color('danger'),
         ];
     }
 }
