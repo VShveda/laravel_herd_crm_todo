@@ -53,8 +53,9 @@ class SalaryResource extends Resource
                 Tables\Columns\TextColumn::make('payment_date')
                     ->label('Payment Date')
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('is_paid')
+                Tables\Columns\IconColumn::make('is_paid')
                     ->label('Is Paid')
+                    ->boolean()
                     ->sortable(),
             ])
             ->filters([
